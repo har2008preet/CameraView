@@ -2348,25 +2348,7 @@ public class CameraView extends FrameLayout implements LifecycleObserver {
 
         @Override
         public void onDeviceOrientationChanged(int deviceOrientation) {
-            LOG.i("onDeviceOrientationChanged", deviceOrientation);
-            int displayOffset = mOrientationHelper.getLastDisplayOffset();
-            if (!mUseDeviceOrientation) {
-                // To fool the engine to return outputs in the VIEW reference system,
-                // The device orientation should be set to -displayOffset.
-                int fakeDeviceOrientation = (360 - displayOffset) % 360;
-                mCameraEngine.getAngles().setDeviceOrientation(fakeDeviceOrientation);
-            } else {
-                mCameraEngine.getAngles().setDeviceOrientation(deviceOrientation);
-            }
-            final int value = (deviceOrientation + displayOffset) % 360;
-            mUiHandler.post(new Runnable() {
-                @Override
-                public void run() {
-                    for (CameraListener listener : mListeners) {
-                        listener.onOrientationChanged(value);
-                    }
-                }
-            });
+            
         }
 
         @Override
